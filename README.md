@@ -91,7 +91,41 @@ source .venv/bin/activate
 pytest -v mri_preproc
 ```
 
-## Design and caveats
+### Visualising results
 
+You can visualise the results by opening the input and output images with a NIfTI viewer like
+[Mango](https://mangoviewer.com/). Below is a screenshot of the comparison on the example scan.
 
+![Mango screenshot](docs/figs/brain_extract_screenshot.png)
+
+## Design, development and caveats
+
+This section is a sparse collections of information.
+
+### Code structure
+
+This is an overview of the different modules that make up the codebase.
+
+```text
+├── docs
+├── mri_preproc
+│   ├── brain_extract   --> Main logic, uses registration to map the brain mask and extract the brain
+│   ├── common          --> Utils to load and pre-process NIfTIs
+│   │   ├── tests       --> The only example tests provided are for module 'common'
+│   ├── main.py         --> The application entry point, a command line script
+│   └── registration    --> Image registration code
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+└── uv.lock
+
+```
+
+### GitHub project
+
+Some (little) information about the development process can be found in the
+[project board](https://github.com/users/ammazza/projects/1), also shown in the
+following screenshot.
+
+![GH project screenshot](docs/figs/board_screenshot.png)
 
