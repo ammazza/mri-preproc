@@ -62,6 +62,19 @@ step). When developing or experimenting set `com_only = True` in [this config fi
 That will limit registration to centre-of-mass alignment, which too low quality for any real-world use
 but extremely fast.
 
+### Running unit tests
+
+The `mri-preproc` codebase has almost zero test coverage. A couple of tests
+were implemented under `mri_preproc/common/preproc/tests` as examples. To run them use:
+
+```bash
+# Activate the virtual environment with the correct python and libs 
+source .venv/bin/activate
+
+# Run all mri-proc tests and show their individual outcomes
+pytest -v mri_preproc
+```
+
 ## Design and caveats
 
 
