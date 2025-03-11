@@ -91,7 +91,65 @@ source .venv/bin/activate
 pytest -v mri_preproc
 ```
 
-## Design and caveats
+### Visualising results
 
+You can visualise the results by opening the input and output images with a NIfTI viewer like
+[Mango](https://mangoviewer.com/). Below is a screenshot of the comparison on the example scan.
 
+![Mango screenshot](docs/figs/brain_extract_screenshot.png)
 
+## Design, development and caveats
+
+This section is a sparse collections of information.
+
+### Code structure
+
+This is an overview of the different modules that make up the codebase.
+
+```text
+├── docs
+├── mri_preproc
+│   ├── brain_extract   --> Main logic, uses registration to map the brain mask and extract the brain
+│   ├── common          --> Utils to load and pre-process NIfTIs
+│   │   ├── tests       --> The only example tests provided are for module 'common'
+│   ├── main.py         --> The application entry point, a command line script
+│   └── registration    --> Image registration code
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+└── uv.lock
+
+```
+
+### AI tools
+
+I used ChatGPT to help me do stuff that I had forgotten how to do. I knew the general direction,
+but it was easier to ask than peruse tons of documentation. The most relevant examples are marked
+with comments starting with `# ChatGPT:`.
+
+### Missing bits
+
+Many things are missing or could be improved! A few are marked with `# TODO:` comments in the code.
+A few others are listed here:
+
+- Programmatic linting, formatting and static checks.
+- Pretty much all testing. Examples are provided but coverage is zero.
+- Input validation. We should check that we're loading the right type of image, with
+  the right dimensions, (i.e. a 3D T1 and not an fMRI of some kind).
+- Exception handling. There are a couple of cases where I'm avoiding the intentionally
+  (e.g. avoid division by zero in normalisation) but I've pretty much left it all for later,
+  including all potential IO errors.
+- DICOM input. This could be done by converting NIfTIs to DICOM (e.g. with dcm2niix)
+  or natively loading DICOMs and, for instance, use the ITK image representation internally.
+- Bespoke classes. In a few places we could specify types and encapsulate behaviour
+  by using dedicated classes, e.g. standardise the image format used internally. 
+- Better documentation. A few functions have docstrings. More are needed and some tool
+  to collect them into API docs for all modules (like sphinx or pdoc).
+
+### GitHub project
+
+Some (little) information about the development process can be found in the
+[project board](https://github.com/users/ammazza/projects/1), also shown in the
+following screenshot.
+
+![GH project screenshot](docs/figs/board_screenshot.png)

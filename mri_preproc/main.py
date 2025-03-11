@@ -58,6 +58,9 @@ def process_mri(input, output, sigma):
         atlas_image['image'],
         mask_image['image'])
 
+    # TODO: it occurred to me only later that we're not explicitly
+    # assigning any metadata to the NIfTI (except the RAS transform). For instance
+    # we're not providing voxel sizes! Ooops. Definitely a bug to fix.
     save_nifti(output, {'image': brain, 'transform': input_image['transform']})
 
 # source .venv/bin/activate
